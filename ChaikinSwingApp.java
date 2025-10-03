@@ -1,8 +1,8 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
 
 public class ChaikinSwingApp extends JPanel implements KeyListener, MouseListener, ActionListener {
 
@@ -33,7 +33,6 @@ public class ChaikinSwingApp extends JPanel implements KeyListener, MouseListene
         // Cast to Graphics2D for better quality
         Graphics2D g2d = (Graphics2D) g;
 
-        // Text
         g2d.setColor(Color.WHITE);
         g2d.drawString("Hello, Swing!", 20, 20);
 
