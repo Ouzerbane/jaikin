@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-public class ChaikinSwingApp extends JPanel implements KeyListener, MouseListener, ActionListener {
+public class ChaikinPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
 
     private final List<Vec2> positions = new ArrayList<>();
     private List<Vec2> points = new ArrayList<>();
@@ -14,25 +14,22 @@ public class ChaikinSwingApp extends JPanel implements KeyListener, MouseListene
 
     private final Timer timer;
 
-    public ChaikinSwingApp() {
+    public ChaikinPanel() {
         setBackground(Color.BLACK);
         setFocusable(true);
         addKeyListener(this);
         addMouseListener(this);
 
-        // 60 FPS timer
+        // 60 FPS
         timer = new Timer(1000 / 60, this);
         timer.start();
     }
 
-    // Animation and drawing
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Cast to Graphics2D for better quality
         Graphics2D g2d = (Graphics2D) g;
-
         g2d.setColor(Color.WHITE);
         g2d.drawString("Hello, Swing!", 20, 20);
 
@@ -77,7 +74,7 @@ public class ChaikinSwingApp extends JPanel implements KeyListener, MouseListene
         List<Vec2> output = new ArrayList<>();
         if (input.size() < 2) return input;
 
-        output.add(input.get(0)); // Optionally keep endpoints
+        output.add(input.get(0));
 
         for (int i = 0; i < input.size() - 1; i++) {
             Vec2 p0 = input.get(i);
@@ -90,17 +87,15 @@ public class ChaikinSwingApp extends JPanel implements KeyListener, MouseListene
             output.add(r);
         }
 
-        output.add(input.get(input.size() - 1)); // Optionally keep endpoints
+        output.add(input.get(input.size() - 1));
         return output;
     }
 
-    // Main loop triggered by the timer
     @Override
     public void actionPerformed(ActionEvent e) {
         repaint();
     }
 
-    // Mouse input
     @Override
     public void mousePressed(MouseEvent e) {
         if (!animationTime && SwingUtilities.isLeftMouseButton(e)) {
@@ -108,7 +103,6 @@ public class ChaikinSwingApp extends JPanel implements KeyListener, MouseListene
         }
     }
 
-    // Keyboard input
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -129,44 +123,11 @@ public class ChaikinSwingApp extends JPanel implements KeyListener, MouseListene
         }
     }
 
-    // Required unused listener methods
+    // Empty methods
     @Override public void keyReleased(KeyEvent e) {}
     @Override public void keyTyped(KeyEvent e) {}
     @Override public void mouseClicked(MouseEvent e) {}
     @Override public void mouseReleased(MouseEvent e) {}
     @Override public void mouseEntered(MouseEvent e) {}
     @Override public void mouseExited(MouseEvent e) {}
-
-    // Vec2 class (like Macroquad's Vec2)
-    static class Vec2 {
-        double x, y;
-
-        Vec2(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        Vec2 add(Vec2 other) {
-            return new Vec2(this.x + other.x, this.y + other.y);
-        }
-
-        Vec2 mul(double scalar) {
-            return new Vec2(this.x * scalar, this.y * scalar);
-        }
-    }
-
-    // Entry point
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Chaikin Smoothing with Swing");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(800, 600);
-            frame.setResizable(false);
-
-            ChaikinSwingApp panel = new ChaikinSwingApp();
-            frame.add(panel);
-            frame.setVisible(true);
-            panel.requestFocusInWindow(); // Ensure key events work
-        });
-    }
 }
