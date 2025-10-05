@@ -27,8 +27,7 @@ public class ChaikinPanel extends JPanel implements KeyListener, MouseListener, 
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); /// had star kay5lina n7aydo al9dim o n7to adid bla bih aytrsm xi fo9 xi
-
+        super.paintComponent(g); 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.WHITE);
         g2d.drawString("Hello, Swing!", 20, 20);
